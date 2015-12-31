@@ -15,15 +15,29 @@ public abstract class CoreProcedure implements Comparable<CoreProcedure>
     //must have step numbers
     protected int step;
     private String procedureName; //must be predefined in this task.
+    /**
+     * The max score from completing this task.
+     */
+    private int score;
 
     public byte statusCode = 0;
 
     private int priority;
-    public CoreProcedure(String procedureName, int priority, int step)
+
+    /**
+     * Constructs the object. These variables are immediately set from when the configuration
+     * sets them. This object will be reconstructed with each change applied to it.
+     * @param procedureName (constant) Set this within the constructor of the base class.
+     * @param priority Set this when the object is changed within the config.
+     * @param step (constant) The starting step value. Depends from how you set up the script.
+     * @param scoreValue (constant) Set this within the constructor. The max score achieved when the procedure is completed.
+     */
+    public CoreProcedure(String procedureName, int priority, int step, int scoreValue)
     {
         setPriority(priority);
         this.procedureName = procedureName;
         this.step=step;
+        score = scoreValue;
     }
 
     /**

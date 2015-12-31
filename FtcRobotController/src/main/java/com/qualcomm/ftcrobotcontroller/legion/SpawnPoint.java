@@ -18,11 +18,25 @@ public class SpawnPoint extends Waypoint{
      */
     private CoreProcedure startingAction;
 
+
     public SpawnPoint(String name, CoreProcedure startingAction, int x, int y, int headingInDegrees)
     {
         super(name, x, y, true, 0);
         this.startingAction=startingAction;
         this.headingInDegrees=headingInDegrees;
+    }
+
+    /**
+     * Call this method as soon as the robot initializes this program so that the procedure
+     * can call back to Navigation and AICore.
+     * @param parent AICore
+     * @see AICore
+     * @see Navigation
+     * @see CoreProcedure
+     */
+    public void setAICore(AICore parent)
+    {
+        startingAction.parent=parent;
     }
 
     public void setHeadingInDegrees(int degrees)

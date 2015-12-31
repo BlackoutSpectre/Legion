@@ -3,6 +3,7 @@ import java.util.Timer;
 
 /**
  * Created by Seth Chick on 6/1/2015.
+ * @deprecated
  */
 public class Wall
 {
