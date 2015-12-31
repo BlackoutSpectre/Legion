@@ -2,13 +2,14 @@
 This is the FTC app with the added functionality of Legion with several added external libraries. This AI is supposed to
 be able to navigate around on the field, avoiding obstacles along the way.
 
-Pathfinding Algorithms: http://software-talk.org/blog/2012/01/a-star-java/
-YAML Serialization: http://yamlbeans.sourceforge.net/
-Image Loader: https://github.com/nostra13/Android-Universal-Image-Loader
+ * Pathfinding Algorithms: http://software-talk.org/blog/2012/01/a-star-java/
+ * YAML Serialization: http://yamlbeans.sourceforge.net/
+ * Image Loader: https://github.com/nostra13/Android-Universal-Image-Loader
 
 
 
 ************************************************************************************
+# FTC_app
 FTC Android Studio project to create FTC Robot Controller app.
 
 This is the FTC SDK that can be used to create an FTC Robot Controller app, with custom op modes.
