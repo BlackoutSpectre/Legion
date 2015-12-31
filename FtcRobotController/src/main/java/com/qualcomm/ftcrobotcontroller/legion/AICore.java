@@ -62,10 +62,11 @@ public class AICore {
     private void loadAll() throws IOException, ClassNotFoundException {
         File root = Helper.getBaseFolder();
         File procedureListFile = new File(root, procedureListFileName);
-        FileInputStream procedureFileInputStream = new FileInputStream(procedureListFile);
-        ObjectInputStream procedureObjectLoader = new ObjectInputStream(procedureFileInputStream);
-        queuedProcedures = (ArrayList<LinkedList<CoreProcedure>>) procedureObjectLoader.readObject();
-        procedureObjectLoader.close();
+        //FileInputStream procedureFileInputStream = new FileInputStream(procedureListFile);
+        //ObjectInputStream procedureObjectLoader = new ObjectInputStream(procedureFileInputStream);
+        //queuedProcedures = (ArrayList<LinkedList<CoreProcedure>>) procedureObjectLoader.readObject();
+        //procedureObjectLoader.close();
+
 
         File segmentListFile = new File(root, timeSegmentFileName);
         FileInputStream segmentInputStream = new FileInputStream(segmentListFile);
