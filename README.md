@@ -1,3 +1,4 @@
+# Legion_AI
 This is the FTC app with the added functionality of Legion with several added external libraries. This AI is supposed to
 be able to navigate around on the field, avoiding obstacles along the way.
 
@@ -7,7 +8,7 @@ Image Loader: https://github.com/nostra13/Android-Universal-Image-Loader
 
 
 
-# ftc_app
+************************************************************************************
 FTC Android Studio project to create FTC Robot Controller app.
 
 This is the FTC SDK that can be used to create an FTC Robot Controller app, with custom op modes.
