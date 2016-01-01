@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.legion.pathfinding;
 
 /**
  * Created by Michael Chick on 7/23/2015.
+ * @deprecated
  */
 public class GridPoint implements Comparable<GridPoint> {
     private int x;

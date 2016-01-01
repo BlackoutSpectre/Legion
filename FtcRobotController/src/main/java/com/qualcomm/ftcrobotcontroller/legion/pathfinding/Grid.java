@@ -15,7 +15,7 @@ import java.util.List;
      */
 public class Grid implements Serializable
 {
-    private boolean[][] walkable;
+    //private boolean[][] walkable;
     private int sizeX;
     private int sizeY;
     private int spacing;
@@ -28,8 +28,8 @@ public class Grid implements Serializable
             this.spacing=spacing;
         else
             this.spacing = 1;
-        walkable= new boolean[sizeX][sizeY];
-        initializeGrid();
+        //walkable= new boolean[sizeX][sizeY];
+        //initializeGrid();
     }
 
     private void setSizeX(int x)
@@ -41,12 +41,12 @@ public class Grid implements Serializable
         sizeY=y;
     }
 
-    private void initializeGrid()
+    /*private void initializeGrid()
     {
         for (int y = 0; y<walkable.length; y++)
             for (int x = 0; x<walkable[y].length; x++)
                 walkable[y][x] = true;
-    }
+    }*/
 
 /*    public int[] getMapCoordinate(int x, int y)
     {
@@ -94,7 +94,7 @@ public class Grid implements Serializable
         return coor;
     }
 
-    public void setWalkable(int x, int y, boolean isWalkable)
+    /*public void setWalkable(int x, int y, boolean isWalkable)
     {
         walkable[y][x] = isWalkable;
     }
@@ -135,5 +135,5 @@ public class Grid implements Serializable
                     return false;
             }
         return true;
-    }
+    }*/
 }

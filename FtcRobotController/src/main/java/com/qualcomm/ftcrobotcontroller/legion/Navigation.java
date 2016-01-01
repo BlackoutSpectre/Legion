@@ -242,23 +242,28 @@ public class Navigation implements SensorEventListener
      * assumes the Waypoint list is sorted
      * @param id the waypoint name to be searched for.
      * @see Waypoint
-     * @throws IllegalArgumentException waypoint not found
+     * @throws RuntimePermission waypoint not found
      */
-    private void pathToWaypoint(String id)
+    private List<PathingNode> pathToWaypoint(String id)
     {
         int[] size = actualField.getMapSize();
         int pos = Collections.binarySearch(listOfWaypoints, id);
         if (pos<0)
-            throw new IllegalArgumentException();
+            throw new RuntimeException("Specified Waypoint was not found in list");
         else {
             currentWayPoint = listOfWaypoints.get(pos);
             int currentXPos = size[0]-1-getXPos();//get the x pos of the matrix
             int currentYPos = size[1]-1-getYPos();//get the y pos of the matrix
             int waypointX = size[0]-1-currentWayPoint.getXPos();
             int waypointY = size[1]-1-currentWayPoint.getYPos();
-            path = actualField.findPath(currentXPos, currentYPos, waypointX, waypointY);
+            return actualField.findPath(currentXPos, currentYPos, waypointX, waypointY);
         }
 
+    }
+
+    private boolean isPathFound(List<PathingNode> path)
+    {
+        return !(path==null||path.size()<1);
     }
 
     /**
@@ -266,13 +271,35 @@ public class Navigation implements SensorEventListener
      * @param id name of waypoint
      * @param makePath should Legion directly move there or take a safe path?
      * @param doCollisionDetection should Legion not smash into a wall if it gets in the way?
+     * @return false = cannot reach target, true = direct navigation will occur or path is clear
      */
-    public void navigateTo(String id, boolean makePath, boolean doCollisionDetection)
+    public boolean navigateTo(String id, boolean makePath, boolean doCollisionDetection)
     {
-        if (makePath)
-            pathToWaypoint(id);
+        boolean navigationAlright; //can the robot make it to the waypoint?
+        /**
+         * If Legion should find a path, Legion will check to see if the robot can make it.
+         * If Legion should drive straight to the target, path checking will be ignored and Legion
+         * will decide that the robot will make it.
+         */
+        if (makePath) {
+
+            List<PathingNode> tempPath=pathToWaypoint(id);
+            if (isPathFound(tempPath))
+            {
+                navigationAlright=true;
+                path=tempPath;
+            }
+            else
+            {
+                navigationAlright=false;
+            }
+
+        }
+        else
+            navigationAlright=true;
         CollisionDetection=doCollisionDetection;
         usePathing=makePath;
+        return navigationAlright;
     }
 
     /**

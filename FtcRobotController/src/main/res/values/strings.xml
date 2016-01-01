@@ -71,5 +71,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <!-- Legion Main Menu -->
   <string name="legion_menu_introduction">Welcome to Legion! Select a menu below to get started setting up.</string>
+  <string name="legion_map_compiler_opener">Field Map Compiler</string>
+    <!-- Field Map Compiler -->
+    <string name="title_activity_map_compiler">Map Compiler</string>
 
 </resources>
