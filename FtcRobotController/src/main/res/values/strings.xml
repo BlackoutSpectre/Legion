@@ -65,5 +65,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <string name="pref_change_wifi_channel">Change Wifi Channel</string>
   <string name="pref_launch_configure">pref_launch_configure</string>
   <string name="pref_launch_autoconfigure">pref_launch_autoconfigure</string>
+    <string name="title_activity_configuration_opener">Legion Configuration Menu</string>
+
+    <string name="hello_world">Hello world!</string>
+
+  <!-- Legion Main Menu -->
+  <string name="legion_menu_introduction">Welcome to Legion! Select a menu below to get started setting up.</string>
 
 </resources>

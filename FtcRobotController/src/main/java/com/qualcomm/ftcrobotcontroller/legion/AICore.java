@@ -33,7 +33,7 @@ public class AICore {
      */
     private ArrayList<LinkedList<CoreProcedure>> queuedProcedures;
     /**
-     * different time indexes for the queued procedures
+     * different time indexes for the queued procedures (in milliseconds)
      *
      * loaded from file
      */
