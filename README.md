@@ -1,4 +1,4 @@
-# Legion_AI
+# Legion AI
 This is the FTC app with the added functionality of Legion with several added external libraries. This AI is supposed to
 be able to navigate around on the field, avoiding obstacles along the way.
 
