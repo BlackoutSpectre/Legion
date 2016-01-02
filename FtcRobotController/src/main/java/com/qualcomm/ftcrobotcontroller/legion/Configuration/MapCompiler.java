@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.ftcrobotcontroller.legion.Helper;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
@@ -31,6 +32,7 @@ public class MapCompiler extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_compiler);
+        baseConfigFolder = Helper.getBaseFolder();
         imageLoader = ImageLoader.getInstance();
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
