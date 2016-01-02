@@ -1,18 +1,59 @@
 package com.qualcomm.ftcrobotcontroller.legion.Configuration;
 
 import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.qualcomm.ftcrobotcontroller.R;
 
-public class ConfigurationOpener extends Activity {
+public class ConfigurationOpener extends ListActivity {
+    String[] menuOptions = {"General", "Field Map Compiler",
+            "Waypoints","Spawnpoints","Velocity Detection Setup", "Procedures"};
 
-    @Override
+
+
+    ListView options;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration_opener);
+
+        //String[] menuOptions = {"General", getApplicationContext().getResources().getString(R.string.legion_map_compiler_opener),
+        //"Waypoints","Spawnpoints","Velocity Detection Setup", "Procedures"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(),android.R.layout.
+        //simple_list_item_1, menuOptions);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.
+                simple_list_item_1, menuOptions);
+
+        options = (ListView) findViewById(android.R.id.list);
+        options.setAdapter(adapter);
+        options.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position)
+                {
+                    case 0:
+                        Toast.makeText(getApplicationContext(),menuOptions[0],Toast.LENGTH_LONG).show();
+                        break;
+                    case 1:
+                        Intent intent = new Intent(getBaseContext(),MapCompiler.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        Toast.makeText(getApplicationContext(),"Not found: " +position,Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -35,5 +76,10 @@ public class ConfigurationOpener extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onItemClick()
+    {
+
     }
 }

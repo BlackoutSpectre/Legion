@@ -89,12 +89,15 @@
         </activity>
         <activity
             android:name=".legion.Configuration.ConfigurationOpener"
-            android:label="@string/title_activity_configuration_opener" >
+            android:label="@string/title_activity_configuration_opener"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
         <activity
             android:name=".legion.Configuration.MapCompiler"
             android:label="@string/title_activity_map_compiler"
-            android:parentActivityName=".legion.Configuration.ConfigurationOpener" >
+            android:parentActivityName=".legion.Configuration.ConfigurationOpener"
+            android:theme="@android:style/Theme.Black"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
