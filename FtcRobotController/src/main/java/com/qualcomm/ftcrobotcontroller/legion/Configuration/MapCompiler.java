@@ -7,8 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
+import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
+import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 
 public class MapCompiler extends Activity {
+
+    Grid scaleInfo;
+    Map<PathingNode> actualTileGrid;
+    Map<PathingNode> scaledTileGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
