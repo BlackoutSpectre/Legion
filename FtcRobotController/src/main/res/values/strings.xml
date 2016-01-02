@@ -75,5 +75,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <string name="legion_map_compiler_opener">Field Map Compiler</string>
     <!-- Field Map Compiler -->
     <string name="title_activity_map_compiler">Map Compiler</string>
+    <string name="load_image">Load Map Image</string>
+    <string name="update_map">Update Map</string>
+    <string name="save_compile_map">Save and Compile</string>
+    <string name="map_scale_hint">Map Resolution Scale</string>
+    <string name="map_scale_tip">It is a good idea to scale down the navigation map (like a lower resolution picture) to
+decrease the path finding time, however this does decrease the accuracy of Legion's navigation.</string>
 
 </resources>
