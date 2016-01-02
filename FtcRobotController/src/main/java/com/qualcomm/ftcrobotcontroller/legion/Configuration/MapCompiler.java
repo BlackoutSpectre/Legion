@@ -5,17 +5,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 
+import com.nostra13.universalimageloader.*;
+
+import java.io.File;
+
 public class MapCompiler extends Activity {
 
-    Grid scaleInfo;
-    Map<PathingNode> actualTileGrid;
-    Map<PathingNode> scaledTileGrid;
+    private Grid scaleInfo;
+    private Map<PathingNode> actualTileGrid;
+    private Map<PathingNode> scaledTileGrid;
+    private File baseConfigFolder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,5 +50,10 @@ public class MapCompiler extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadBitmap(View view)
+    {
+
     }
 }

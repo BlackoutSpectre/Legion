@@ -96,7 +96,7 @@
             android:name=".legion.Configuration.MapCompiler"
             android:label="@string/title_activity_map_compiler"
             android:parentActivityName=".legion.Configuration.ConfigurationOpener"
-            android:theme="@android:style/Theme.Black"
+            android:theme="@android:style/Theme.Light"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

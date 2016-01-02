@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -60,6 +60,20 @@
                 android:layout_weight="1"
                 android:hint="@string/map_scale_hint" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/status_message_text"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" />
 
         <LinearLayout
             android:orientation="horizontal"
