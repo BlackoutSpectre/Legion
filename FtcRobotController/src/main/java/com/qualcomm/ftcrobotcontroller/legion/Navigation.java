@@ -22,13 +22,14 @@ import java.util.TimerTask;
 
 
 
-//todo: implement sensor functions, modify a* pathfinding to work with program, implement spawn point config file
+//todo: implement sensor functions, implement spawn point config file
 //todo: implement waypoint files, implement picture maps, implement robot properties file
+//todo: change FileNotFoundException to RuntimeException with details of what is wrong
 
 /**
  * This handles all movement and navigation of the robot, will throw fatal exceptions during
  * autonomous if something goes wrong.
- * @version 0.00.00.01 dev
+ * @version 0.00.00.03 dev
  * @author Blackout Spectre
  */
 public class Navigation implements SensorEventListener
