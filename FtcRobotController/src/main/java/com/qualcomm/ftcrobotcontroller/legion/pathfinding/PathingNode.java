@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Michael Chick on 7/15/2015.
+ * Created by Seth on 7/15/2015.
  *
  * Note to programmer: when seeing a new obstruction, check to see if it's static first and if it's
  * a ramp, if not, call the newTime() method and then update the path. The pathfinding algorithms will
