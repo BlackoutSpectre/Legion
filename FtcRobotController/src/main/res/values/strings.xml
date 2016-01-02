@@ -80,6 +80,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="save_compile_map">Save and Compile</string>
     <string name="map_scale_hint">Map Resolution Scale</string>
     <string name="map_scale_tip">It is a good idea to scale down the navigation map (like a lower resolution picture) to
-decrease the path finding time, however this does decrease the accuracy of Legion's navigation.</string>
+decrease the path finding time, however this does decrease the accuracy of Legion\'s navigation.</string>
 
 </resources>
