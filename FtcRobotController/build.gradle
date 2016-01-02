@@ -45,4 +45,5 @@ dependencies {
     compile(name: 'Analytics-release', ext: 'aar')
     compile(name: 'WirelessP2p-release', ext: 'aar')
     compile(name: 'universal-image-loader-1.9.4', ext: 'jar')
+    compile(name: 'yamlbeans-master', ext: 'zip')
 }
