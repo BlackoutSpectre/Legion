@@ -11,6 +11,7 @@ import java.io.File;
  */
 public class Helper
 {
+    public static final String bitmapImageFilename = "/map.bmp";
 
     /**
      * gets the path to the configuration folder, if the path doesn't exist, then it will generate

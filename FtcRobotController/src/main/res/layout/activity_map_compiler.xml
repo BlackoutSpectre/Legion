@@ -21,7 +21,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/load_image"
-                android:id="@+id/load_image" />
+                android:id="@+id/load_image"
+                android:onClick="loadBitmap" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -73,7 +74,8 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar" />
+            android:id="@+id/progressBar"
+            android:visibility="gone" />
 
         <LinearLayout
             android:orientation="horizontal"
