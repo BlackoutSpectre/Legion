@@ -215,4 +215,14 @@ public class PathingNode extends AbstractNode {
 
     }
 
+    /**
+     * set if there is a static wall there. Warning: do not use during autonomous, only when
+     * compiling
+     * @param wallPresent is there a permanent wall here?
+     */
+    public void setIsStatic(boolean wallPresent)
+    {
+        isStatic=wallPresent;
+    }
+
 }
