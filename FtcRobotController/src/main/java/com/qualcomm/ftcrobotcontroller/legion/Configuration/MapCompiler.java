@@ -58,6 +58,7 @@ public class MapCompiler extends Activity {
         statusText = (TextView) findViewById(R.id.status_message_text);
         options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        bitmapPreview.setAdjustViewBounds(true);
     }
 
     public void setBitmap(Bitmap bitmap) {
@@ -85,6 +86,8 @@ public class MapCompiler extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public void loadBitmap(View view)
     {
