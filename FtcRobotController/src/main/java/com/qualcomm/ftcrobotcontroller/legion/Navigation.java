@@ -25,6 +25,7 @@ import java.util.TimerTask;
 //todo: implement sensor functions, implement spawn point config file
 //todo: implement waypoint files, implement picture maps, implement robot properties file
 //todo: change FileNotFoundException to RuntimeException with details of what is wrong
+//todo: emprovise collision detection from tile scaling
 
 /**
  * This handles all movement and navigation of the robot, will throw fatal exceptions during
