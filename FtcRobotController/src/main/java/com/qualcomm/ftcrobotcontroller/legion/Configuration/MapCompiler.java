@@ -170,7 +170,7 @@ public class MapCompiler extends Activity {
             updateMap(scale);
         }
         else
-            Toast.makeText(getApplicationContext(),"Tiles are bigger than field", Toast.LENGTH_LONG)
+            Toast.makeText(getApplicationContext(),"Error: Tiles are bigger than field", Toast.LENGTH_LONG)
             .show();
     }
 
