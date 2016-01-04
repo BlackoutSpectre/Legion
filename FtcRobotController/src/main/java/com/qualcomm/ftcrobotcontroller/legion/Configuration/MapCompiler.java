@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+//import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.legion.Helper;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
@@ -36,7 +37,7 @@ public class MapCompiler extends Activity {
     private Map<PathingNode> actualTileGrid;
     private Map<PathingNode> scaledTileGrid;
     private File baseConfigFolder;
-    ImageLoader imageLoader;
+//    ImageLoader imageLoader;
     ProgressBar progressBar;
     ImageView bitmapPreview;
     TextView statusText;
@@ -49,7 +50,7 @@ public class MapCompiler extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_compiler);
         baseConfigFolder = Helper.getBaseFolder();
-        imageLoader = ImageLoader.getInstance();
+//        imageLoader = ImageLoader.getInstance();
 
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
