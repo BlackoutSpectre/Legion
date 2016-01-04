@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -183,6 +184,24 @@ public class MapCompiler extends Activity {
 
         //setting tile properties
 
+        for(int y = 0; y<yBitmapSize; y++)
+        {
+            for (int x = 0; x<xBitmapSize;x++)
+            {
+                int color = bitmap.getPixel(x, y);
+                int red = Color.red(color);
+                int green = Color.green(color);
+                int blue = Color.blue(color);
+
+                int[] scaleCoordinates = scaleInfo.getMapCoordinateFromGrid(x,y);
+
+                PathingNode node =scaledTileGrid.getNode(scaleCoordinates[0], scaleCoordinates[1]);
+                if (red==255)
+                    node.setRamp(true);
+                if (blue==255)
+                    node.setIsStatic(true);
+            }
+        }
     }
     private void displayMap()
     {
