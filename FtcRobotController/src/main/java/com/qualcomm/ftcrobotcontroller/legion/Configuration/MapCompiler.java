@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -193,7 +195,7 @@ public class MapCompiler extends Activity {
                 int green = Color.green(color);
                 int blue = Color.blue(color);
 
-                int[] scaleCoordinates = scaleInfo.getMapCoordinateFromGrid(x,y);
+                int[] scaleCoordinates = scaleInfo.getMapCoordinateFromGrid(x, y);
 
                 PathingNode node =scaledTileGrid.getNode(scaleCoordinates[0], scaleCoordinates[1]);
                 if (red==255)
@@ -205,6 +207,32 @@ public class MapCompiler extends Activity {
     }
     private void displayMap()
     {
+        //Canvas canvas = new Canvas(bitmap);
+        //Paint p = new Paint();
+
+        for (int y = 0; y<yBitmapSize;y++)
+        {
+            for (int x = 0; x<xBitmapSize; x++)
+            {
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+
+                int[] scaledCoordinates = scaleInfo.getMapCoordinateFromGrid(x,y);
+                PathingNode node = scaledTileGrid.getNode(scaledCoordinates[0],scaledCoordinates[1]);
+                if (node.isRamp())
+                    red = 255;
+                if (node.isStatic())
+                    blue = 255;
+                int color = Color.rgb(red,green,blue);
+
+                //p.setColor(color);
+                //canvas.drawPoint(x,y,p);
+                bitmap.setPixel(x,y,color);
+            }
+        }
+        bitmapPreview.setImageBitmap(bitmap);
+
 
     }
 }
