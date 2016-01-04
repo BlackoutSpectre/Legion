@@ -74,6 +74,12 @@ public class Grid implements Serializable
         return (int)Math.ceil((double)sizeY/spacing);
     }
 
+    /**
+     * gets the scaled coordinate from the actual map.
+     * @param x
+     * @param y
+     * @return
+     */
     public int[] getMapCoordinateFromGrid(int x, int y)
     {
         int[] coor = new int[2];
@@ -84,6 +90,12 @@ public class Grid implements Serializable
         return coor;
     }
 
+    /**
+     * gets the actual coordinate from the scaled grid.
+     * @param x
+     * @param y
+     * @return
+     */
     public int[] getGridCoordinateFromMap(int x, int y)
     {
         int[] coor = new int[2];
