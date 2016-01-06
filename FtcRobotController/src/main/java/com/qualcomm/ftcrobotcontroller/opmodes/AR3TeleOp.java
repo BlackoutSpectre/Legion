@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by Adhan on 1/3/2016.
  * Left and Right Motor TeleOp
+ * unused
+ * @deprecated
  */
 public class AR3TeleOp extends OpMode {
 

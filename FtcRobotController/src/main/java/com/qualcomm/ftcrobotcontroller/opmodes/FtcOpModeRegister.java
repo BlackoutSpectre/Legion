@@ -64,7 +64,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register ("PushBotManual", PushBotManual.class);
 
 
-
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
@@ -96,5 +95,9 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.java);
     //manager.register("PushBotIrSeek", PushBotIrSeek.java);
     //manager.register("PushBotSquare", PushBotSquare.java);
+    //manager.register("AR1TeleOp", AR1TeleOp.class);
+    //manager.register("AR2TeleOp", AR2TeleOp.class);
+    //manager.register("AR3TeleOp", AR3TeleOp.class);
+
   }
 }
