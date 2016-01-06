@@ -41,7 +41,7 @@ public class Helper
     public static class UI
     {
         protected static Context context;
-        public int getIntFromString(String numberString, int defaultNumber)
+        public static int getIntFromString(String numberString, int defaultNumber)
         {
             int number;
             if (numberString.length()>0)

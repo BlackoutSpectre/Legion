@@ -4,10 +4,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,10 +23,12 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+//import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.legion.Helper;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
+import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathNodeFactory;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 
 
@@ -36,12 +42,16 @@ public class MapCompiler extends Activity {
     private Map<PathingNode> actualTileGrid;
     private Map<PathingNode> scaledTileGrid;
     private File baseConfigFolder;
-    ImageLoader imageLoader;
+//    ImageLoader imageLoader;
     ProgressBar progressBar;
     ImageView bitmapPreview;
     TextView statusText;
     BitmapFactory.Options options;
     Bitmap bitmap = null;
+
+    public static final int defaultGridScale = 1;
+    private int xBitmapSize = 1;
+    private int yBitmapSize = 1;
 
 
     @Override
@@ -49,7 +59,7 @@ public class MapCompiler extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_compiler);
         baseConfigFolder = Helper.getBaseFolder();
-        imageLoader = ImageLoader.getInstance();
+//        imageLoader = ImageLoader.getInstance();
 
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -57,6 +67,7 @@ public class MapCompiler extends Activity {
         statusText = (TextView) findViewById(R.id.status_message_text);
         options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        bitmapPreview.setAdjustViewBounds(true);
     }
 
     public void setBitmap(Bitmap bitmap) {
@@ -85,12 +96,16 @@ public class MapCompiler extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     public void loadBitmap(View view)
     {
         File bitmapFile = new File(Helper.getBaseFolder(),Helper.bitmapImageFilename);
         try {
             FileInputStream fileInputStream = new FileInputStream(bitmapFile);
             bitmap = BitmapFactory.decodeStream(fileInputStream);
+            yBitmapSize=bitmap.getHeight();
+            xBitmapSize=bitmap.getWidth();
             bitmapPreview.setMaxHeight(bitmap.getHeight());
             bitmapPreview.setMaxWidth(bitmap.getWidth());
             bitmapPreview.setImageBitmap(bitmap);
@@ -136,6 +151,88 @@ public class MapCompiler extends Activity {
                         progressBar.setProgress(i);
                     }
         });*/
+
+    }
+
+    /**
+     * checks to see that the tiles are not bigger than the actual size of the field
+     * @param scale
+     * @return false = too big, true = scale ok
+     */
+    private boolean scaleNotTooBig(int scale)
+    {
+        return scale<=xBitmapSize&&scale<=yBitmapSize;
+    }
+
+    public void setUpdateMap(View view)
+    {
+        String input = ((EditText) findViewById(R.id.scale_number)).toString();
+        int scale = Helper.UI.getIntFromString(input, defaultGridScale);
+        if (scaleNotTooBig(scale)) {
+            updateMap(scale);
+        }
+        else
+            Toast.makeText(getApplicationContext(),"Error: Tiles are bigger than field", Toast.LENGTH_LONG)
+            .show();
+    }
+
+    private void updateMap(int scale)
+    {
+
+        scaleInfo = new Grid(xBitmapSize,yBitmapSize,scale);
+        int scaledXSize = scaleInfo.getGridSizeX();
+        int scaledYSize = scaleInfo.getGridSizeY();
+        scaledTileGrid = new Map<PathingNode>(scaledXSize,scaledYSize,new PathNodeFactory(),0);
+
+        //setting tile properties
+
+        for(int y = 0; y<yBitmapSize; y++)
+        {
+            for (int x = 0; x<xBitmapSize;x++)
+            {
+                int color = bitmap.getPixel(x, y);
+                int red = Color.red(color);
+                int green = Color.green(color);
+                int blue = Color.blue(color);
+
+                int[] scaleCoordinates = scaleInfo.getMapCoordinateFromGrid(x, y);
+
+                PathingNode node =scaledTileGrid.getNode(scaleCoordinates[0], scaleCoordinates[1]);
+                if (red==255)
+                    node.setRamp(true);
+                if (blue==255)
+                    node.setIsStatic(true);
+            }
+        }
+    }
+    private void displayMap()
+    {
+        //Canvas canvas = new Canvas(bitmap);
+        //Paint p = new Paint();
+
+        for (int y = 0; y<yBitmapSize;y++)
+        {
+            for (int x = 0; x<xBitmapSize; x++)
+            {
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+
+                int[] scaledCoordinates = scaleInfo.getMapCoordinateFromGrid(x,y);
+                PathingNode node = scaledTileGrid.getNode(scaledCoordinates[0],scaledCoordinates[1]);
+                if (node.isRamp())
+                    red = 255;
+                if (node.isStatic())
+                    blue = 255;
+                int color = Color.rgb(red,green,blue);
+
+                //p.setColor(color);
+                //canvas.drawPoint(x,y,p);
+                bitmap.setPixel(x,y,color);
+            }
+        }
+        bitmapPreview.setImageBitmap(bitmap);
+
 
     }
 }
