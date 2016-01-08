@@ -23,9 +23,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
-//import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.ftcrobotcontroller.legion.Helper;
+import com.qualcomm.ftcrobotcontroller.legion.Navigation;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathNodeFactory;
@@ -35,6 +35,9 @@ import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 
 public class MapCompiler extends Activity {
 
@@ -48,6 +51,7 @@ public class MapCompiler extends Activity {
     TextView statusText;
     BitmapFactory.Options options;
     Bitmap bitmap = null;
+    File base = Helper.getBaseFolder();
 
     public static final int defaultGridScale = 1;
     private int xBitmapSize = 1;
@@ -68,6 +72,39 @@ public class MapCompiler extends Activity {
         options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         bitmapPreview.setAdjustViewBounds(true);
+
+        if (compiledMapExists())
+        {
+            try {
+                FileInputStream mapInputStream = new FileInputStream(Navigation.COMPILED_MAP);
+                ObjectInputStream mapObjectInputStream = new ObjectInputStream(mapInputStream);
+                scaledTileGrid = (Map<PathingNode>) mapObjectInputStream.readObject();
+                mapObjectInputStream.close();
+
+                FileInputStream gridInputStream = new FileInputStream(Navigation.GRID_INFO);
+                ObjectInputStream gridObjectInputStream = new ObjectInputStream(gridInputStream);
+                scaleInfo = (Grid) gridObjectInputStream.readObject();
+                gridObjectInputStream.close();
+            } catch (FileNotFoundException e) {
+
+                e.printStackTrace();
+            } catch (StreamCorruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+    }
+
+    private boolean compiledMapExists()
+    {
+        return Navigation.COMPILED_MAP.exists();
+
     }
 
     public void setBitmap(Bitmap bitmap) {
@@ -170,6 +207,7 @@ public class MapCompiler extends Activity {
         int scale = Helper.UI.getIntFromString(input, defaultGridScale);
         if (scaleNotTooBig(scale)) {
             updateMap(scale);
+            displayMap();
         }
         else
             Toast.makeText(getApplicationContext(),"Error: Tiles are bigger than field", Toast.LENGTH_LONG)
@@ -218,13 +256,13 @@ public class MapCompiler extends Activity {
                 int green = 0;
                 int blue = 0;
 
-                int[] scaledCoordinates = scaleInfo.getMapCoordinateFromGrid(x,y);
-                PathingNode node = scaledTileGrid.getNode(scaledCoordinates[0],scaledCoordinates[1]);
+                int[] scaledCoordinates = scaleInfo.getMapCoordinateFromGrid(x, y);
+                PathingNode node = scaledTileGrid.getNode(scaledCoordinates[0], scaledCoordinates[1]);
                 if (node.isRamp())
                     red = 255;
                 if (node.isStatic())
                     blue = 255;
-                int color = Color.rgb(red,green,blue);
+                int color = Color.rgb(red, green, blue);
 
                 //p.setColor(color);
                 //canvas.drawPoint(x,y,p);
@@ -234,5 +272,16 @@ public class MapCompiler extends Activity {
         bitmapPreview.setImageBitmap(bitmap);
 
 
+    }
+
+    public void saveMap(View view)
+    {
+        if (scaledTileGrid==null || scaleInfo==null)
+            Toast.makeText(getApplicationContext(),"Error: Map not set. Please enter settings" +
+                    "and press \"Update Map\"", Toast.LENGTH_LONG).show();
+        else
+        {
+
+        }
     }
 }
