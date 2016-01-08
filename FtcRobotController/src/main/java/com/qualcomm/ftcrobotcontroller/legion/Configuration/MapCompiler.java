@@ -73,7 +73,7 @@ public class MapCompiler extends Activity {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         bitmapPreview.setAdjustViewBounds(true);
 
-        if (compiledMapExists())
+        if (compiledMapExists())  //// TODO: 1/8/2016 finish by setting text box info 
         {
             try {
                 FileInputStream mapInputStream = new FileInputStream(Navigation.COMPILED_MAP);
