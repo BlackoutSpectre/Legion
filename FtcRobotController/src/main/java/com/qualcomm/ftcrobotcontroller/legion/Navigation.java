@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,6 +81,9 @@ public class Navigation implements SensorEventListener
 
     Timer navTimer;
     TimerTask timerRunner;
+
+    public static final File COMPILED_MAP = new File(Helper.getBaseFolder(),"/compiledMap.map");
+    public static final File GRID_INFO = new File(Helper.getBaseFolder(),"/gridInfo.bin");
 
     /**
      * this is so the Navigation class can callback to the AICore class
