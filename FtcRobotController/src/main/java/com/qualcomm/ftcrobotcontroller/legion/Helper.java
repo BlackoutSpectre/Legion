@@ -30,16 +30,22 @@ public class Helper
             File baseConfigFolder = new File(root.getAbsolutePath()+ "/Legion Configuration");
             if (baseConfigFolder.exists())
             {
+                makeNoMediaFile();
                 return baseConfigFolder;
             }
             else
             {
                 baseConfigFolder.mkdir();
+                makeNoMediaFile();
                 return baseConfigFolder;
             }
         }
         else
             return null;
+    }
+    public static void makeNoMediaFile()
+    {
+        makeNoMediaFile("");
     }
     public static void makeNoMediaFile(String dir)
     {
