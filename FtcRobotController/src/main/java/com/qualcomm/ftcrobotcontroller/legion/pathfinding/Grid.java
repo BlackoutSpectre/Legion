@@ -106,6 +106,15 @@ public class Grid implements Serializable
         return coor;
     }
 
+    /**
+     *
+     * @return spacing value (map scale)
+     */
+    public int getSpacing()
+    {
+        return spacing;
+    }
+
     /*public void setWalkable(int x, int y, boolean isWalkable)
     {
         walkable[y][x] = isWalkable;
