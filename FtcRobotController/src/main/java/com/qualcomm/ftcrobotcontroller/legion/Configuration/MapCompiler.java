@@ -78,15 +78,15 @@ public class MapCompiler extends Activity {
         bitmapPreview.setAdjustViewBounds(true);
         scaleText = (EditText) findViewById(R.id.scale_number);
 
-        if (compiledMapExists())  //// TODO: 1/8/2016 finish by setting text box info 
+        if (compiledMapExists())
         {
             try {
-                FileInputStream mapInputStream = new FileInputStream(Navigation.COMPILED_MAP);
+                FileInputStream mapInputStream = new FileInputStream(Navigation.getCompiledMap());
                 ObjectInputStream mapObjectInputStream = new ObjectInputStream(mapInputStream);
                 scaledTileGrid = (Map<PathingNode>) mapObjectInputStream.readObject();
                 mapObjectInputStream.close();
 
-                FileInputStream gridInputStream = new FileInputStream(Navigation.GRID_INFO);
+                FileInputStream gridInputStream = new FileInputStream(Navigation.getGridInfo());
                 ObjectInputStream gridObjectInputStream = new ObjectInputStream(gridInputStream);
                 scaleInfo = (Grid) gridObjectInputStream.readObject();
                 gridObjectInputStream.close();
@@ -120,7 +120,7 @@ public class MapCompiler extends Activity {
 
     private boolean compiledMapExists()
     {
-        return Navigation.COMPILED_MAP.exists();
+        return Navigation.getCompiledMap().exists()&&Navigation.getGridInfo().exists();
 
     }
 
@@ -307,12 +307,12 @@ public class MapCompiler extends Activity {
         {
            // OutputStream outputStream = new OutputStream
             try {
-                FileOutputStream fileOutputStream = new FileOutputStream(Navigation.COMPILED_MAP);
+                FileOutputStream fileOutputStream = new FileOutputStream(Navigation.getCompiledMap());
                 ObjectOutputStream mapOutputStream = new ObjectOutputStream(fileOutputStream);
                 mapOutputStream.writeObject(scaledTileGrid);
                 mapOutputStream.close();
 
-                fileOutputStream = new FileOutputStream(Navigation.GRID_INFO);
+                fileOutputStream = new FileOutputStream(Navigation.getGridInfo());
                 ObjectOutputStream gridOutputStream = new ObjectOutputStream(fileOutputStream);
                 gridOutputStream.writeObject(scaleInfo);
                 gridOutputStream.close();
