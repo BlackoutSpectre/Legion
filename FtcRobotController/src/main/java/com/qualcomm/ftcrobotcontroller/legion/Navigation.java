@@ -82,8 +82,8 @@ public class Navigation implements SensorEventListener
     Timer navTimer;
     TimerTask timerRunner;
 
-    public static final File COMPILED_MAP = new File(Helper.getBaseFolder(),"/compiledMap.map");
-    public static final File GRID_INFO = new File(Helper.getBaseFolder(),"/gridInfo.bin");
+    //public static final File COMPILED_MAP = new File(Helper.getBaseFolder(),"/compiledMap.map");
+    //public static final File GRID_INFO = new File(Helper.getBaseFolder(),"/gridInfo.bin");
 
     /**
      * this is so the Navigation class can callback to the AICore class
@@ -105,6 +105,15 @@ public class Navigation implements SensorEventListener
      * current waypoint in use
      */
     private Waypoint currentWayPoint;
+
+    public static File getCompiledMap()
+    {
+        return new File(Helper.getBaseFolder(),"/compiledMap.map");
+    }
+    public static File getGridInfo()
+    {
+        return new File(Helper.getBaseFolder(),"/gridInfo.bin");
+    }
 
     /**
      * Use this method to initialize and load all files and configs into memory
