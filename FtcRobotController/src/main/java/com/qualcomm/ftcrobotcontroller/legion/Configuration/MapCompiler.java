@@ -35,8 +35,11 @@ import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.StreamCorruptedException;
 
 public class MapCompiler extends Activity {
@@ -52,6 +55,7 @@ public class MapCompiler extends Activity {
     BitmapFactory.Options options;
     Bitmap bitmap = null;
     File base = Helper.getBaseFolder();
+    EditText scaleText;
 
     public static final int defaultGridScale = 1;
     private int xBitmapSize = 1;
@@ -72,6 +76,7 @@ public class MapCompiler extends Activity {
         options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         bitmapPreview.setAdjustViewBounds(true);
+        scaleText = (EditText) findViewById(R.id.scale_number);
 
         if (compiledMapExists())  //// TODO: 1/8/2016 finish by setting text box info 
         {
@@ -85,14 +90,26 @@ public class MapCompiler extends Activity {
                 ObjectInputStream gridObjectInputStream = new ObjectInputStream(gridInputStream);
                 scaleInfo = (Grid) gridObjectInputStream.readObject();
                 gridObjectInputStream.close();
-            } catch (FileNotFoundException e) {
+                xBitmapSize = scaleInfo.getGridSizeX();
+                yBitmapSize = scaleInfo.getGridSizeY();
 
+                String scale = ""+scaleInfo.getSpacing();
+                scaleText.setText(scale);
+                displayMap();
+                Toast.makeText(getApplicationContext(),"Previous Map Settings loaded",
+                        Toast.LENGTH_LONG).show();
+
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getApplicationContext(),"Error: compiled map not found", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } catch (StreamCorruptedException e) {
+                Toast.makeText(getApplicationContext(), "StreamCorruptedException",Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } catch (IOException e) {
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(),Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
@@ -248,6 +265,13 @@ public class MapCompiler extends Activity {
         //Canvas canvas = new Canvas(bitmap);
         //Paint p = new Paint();
 
+        bitmap = Bitmap.createBitmap(xBitmapSize,yBitmapSize,bitmap.getConfig());
+        for (int y = 0; y<yBitmapSize; y++)
+            for (int x = 0; x<xBitmapSize; x++)
+            {
+                int color = Color.rgb(0,0,0);
+                bitmap.setPixel(x,y,color);
+            }
         for (int y = 0; y<yBitmapSize;y++)
         {
             for (int x = 0; x<xBitmapSize; x++)
@@ -281,7 +305,24 @@ public class MapCompiler extends Activity {
                     "and press \"Update Map\"", Toast.LENGTH_LONG).show();
         else
         {
+           // OutputStream outputStream = new OutputStream
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(Navigation.COMPILED_MAP);
+                ObjectOutputStream mapOutputStream = new ObjectOutputStream(fileOutputStream);
+                mapOutputStream.writeObject(scaledTileGrid);
+                mapOutputStream.close();
 
+                fileOutputStream = new FileOutputStream(Navigation.GRID_INFO);
+                ObjectOutputStream gridOutputStream = new ObjectOutputStream(fileOutputStream);
+                gridOutputStream.writeObject(scaleInfo);
+                gridOutputStream.close();
+                Toast.makeText(getApplicationContext(),"Maps Compiled and successfully saved",Toast.LENGTH_LONG)
+                        .show();
+
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
         }
     }
 }

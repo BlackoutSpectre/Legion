@@ -41,11 +41,11 @@ public class Helper
         else
             return null;
     }
-    public static void makeNoMediaFile()
+    public static void makeNoMediaFile(String dir)
     {
         File baseFolder = getBaseFolder();
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(baseFolder, "/.nomedia")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(baseFolder, dir+"/.nomedia")));
             writer.write("");
             writer.close();
         } catch (IOException e) {
