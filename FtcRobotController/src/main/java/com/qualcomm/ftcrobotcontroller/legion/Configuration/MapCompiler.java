@@ -54,12 +54,14 @@ public class MapCompiler extends Activity {
     TextView statusText;
     BitmapFactory.Options options;
     Bitmap bitmap = null;
-    File base = Helper.getBaseFolder();
+//    File base = Helper.getBaseFolder();
     EditText scaleText;
 
     public static final int defaultGridScale = 1;
     private int xBitmapSize = 1;
     private int yBitmapSize = 1;
+
+    private boolean mapLoaded = false;
 
 
     @Override
@@ -77,6 +79,7 @@ public class MapCompiler extends Activity {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         bitmapPreview.setAdjustViewBounds(true);
         scaleText = (EditText) findViewById(R.id.scale_number);
+        Helper.makeNoMediaFile();
 
         if (compiledMapExists())
         {
@@ -98,6 +101,7 @@ public class MapCompiler extends Activity {
                 displayMap();
                 Toast.makeText(getApplicationContext(),"Previous Map Settings loaded",
                         Toast.LENGTH_LONG).show();
+                mapLoaded = true;
 
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),"Error: compiled map not found", Toast.LENGTH_LONG).show();
@@ -163,6 +167,8 @@ public class MapCompiler extends Activity {
             bitmapPreview.setMaxHeight(bitmap.getHeight());
             bitmapPreview.setMaxWidth(bitmap.getWidth());
             bitmapPreview.setImageBitmap(bitmap);
+            mapLoaded=true;
+
 
 
 
@@ -218,29 +224,45 @@ public class MapCompiler extends Activity {
         return scale<=xBitmapSize&&scale<=yBitmapSize;
     }
 
-    public void setUpdateMap(View view)
-    {
-        String input = ((EditText) findViewById(R.id.scale_number)).toString();
-        int scale = Helper.UI.getIntFromString(input, defaultGridScale);
-        if (scaleNotTooBig(scale)) {
-            updateMap(scale);
-            displayMap();
+    public void setUpdateMap(View view) {
+        if (mapLoaded) {
+
+            String input = ((EditText) findViewById(R.id.scale_number)).getText().toString();
+            int scale = Helper.UI.getIntFromString(input, defaultGridScale);
+            if (scaleNotTooBig(scale)) {
+                boolean hasMemory = updateMap(scale);
+                if (hasMemory) {
+                    //displayMap();
+                }
+                else
+                {}
+            } else
+                Toast.makeText(getApplicationContext(), "Error: Tiles are bigger than field", Toast.LENGTH_LONG)
+                        .show();
         }
-        else
-            Toast.makeText(getApplicationContext(),"Error: Tiles are bigger than field", Toast.LENGTH_LONG)
-            .show();
     }
 
-    private void updateMap(int scale)
+    private boolean updateMap(int scale)
     {
 
         scaleInfo = new Grid(xBitmapSize,yBitmapSize,scale);
-        int scaledXSize = scaleInfo.getGridSizeX();
-        int scaledYSize = scaleInfo.getGridSizeY();
-        scaledTileGrid = new Map<PathingNode>(scaledXSize,scaledYSize,new PathNodeFactory(),0);
+        int scaledXSize = scaleInfo.getMapSizeX();
+        int scaledYSize = scaleInfo.getMapSizeY();
+        boolean hasMemory = true;
+        try {
+            scaledTileGrid = new Map<PathingNode>(scaledXSize, scaledYSize, new PathNodeFactory(), 0);
+        }
+        catch (OutOfMemoryError e)
+        {
+            Toast.makeText(getApplicationContext(), "Out of memory, increase the scale size.",
+            Toast.LENGTH_LONG).show();
+            hasMemory=false;
+            scaledTileGrid=null;
+            e.printStackTrace();
+        }
 
         //setting tile properties
-
+        if (hasMemory)
         for(int y = 0; y<yBitmapSize; y++)
         {
             for (int x = 0; x<xBitmapSize;x++)
@@ -259,6 +281,7 @@ public class MapCompiler extends Activity {
                     node.setIsStatic(true);
             }
         }
+        return hasMemory;
     }
     private void displayMap()
     {
@@ -300,9 +323,9 @@ public class MapCompiler extends Activity {
 
     public void saveMap(View view)
     {
-        if (scaledTileGrid==null || scaleInfo==null)
+        if ((scaledTileGrid==null || scaleInfo==null)&&!mapLoaded)
             Toast.makeText(getApplicationContext(),"Error: Map not set. Please enter settings" +
-                    "and press \"Update Map\"", Toast.LENGTH_LONG).show();
+                    " and press \"Update Map\"", Toast.LENGTH_LONG).show();
         else
         {
            // OutputStream outputStream = new OutputStream
