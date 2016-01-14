@@ -25,6 +25,7 @@
 
 package com.qualcomm.ftcrobotcontroller.legion.pathfinding;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ import java.util.List;
  * @version 1.0
  * @param <T>
  */
-public class Map<T extends AbstractNode> {
+public class Map<T extends AbstractNode> implements Serializable{
 
     /** weather or not it is possible to walk diagonally on the map in general. */
     protected static boolean CANMOVEDIAGONALY = true;

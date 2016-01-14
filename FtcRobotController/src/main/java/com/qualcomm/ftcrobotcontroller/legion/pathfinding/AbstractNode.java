@@ -17,6 +17,8 @@
 
 package com.qualcomm.ftcrobotcontroller.legion.pathfinding;
 
+import java.io.Serializable;
+
 /**
  * This class represents an AbstractNode. It has all the appropriate fields as well
  * as getter and setter to be used by the A* algorithm.
@@ -43,7 +45,7 @@ package com.qualcomm.ftcrobotcontroller.legion.pathfinding;
  *
  * @version 1.0
  */
-public abstract class AbstractNode {
+public abstract class AbstractNode implements Serializable {
 
     /** costs to move sideways from one square to another. */
     protected static final int BASICMOVEMENTCOST = 10;

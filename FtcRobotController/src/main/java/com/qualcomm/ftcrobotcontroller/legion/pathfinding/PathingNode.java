@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.legion.pathfinding;
 import com.qualcomm.ftcrobotcontroller.legion.Navigation;
 import com.qualcomm.ftcrobotcontroller.legion.Wall;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,7 +14,7 @@ import java.util.TimerTask;
  * a ramp, if not, call the newTime() method and then update the path. The pathfinding algorithms will
  * automatically check to see if the obstruction is still present.
  */
-public class PathingNode extends AbstractNode {
+public class PathingNode extends AbstractNode implements Serializable{
 
     private int xPos;
     private int yPos;
