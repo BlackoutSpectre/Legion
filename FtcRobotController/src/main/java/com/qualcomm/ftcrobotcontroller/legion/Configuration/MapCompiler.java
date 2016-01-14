@@ -98,7 +98,8 @@ public class MapCompiler extends Activity {
 
                 String scale = ""+scaleInfo.getSpacing();
                 scaleText.setText(scale);
-                displayMap();
+
+                //displayMap();
                 Toast.makeText(getApplicationContext(),"Previous Map Settings loaded",
                         Toast.LENGTH_LONG).show();
                 mapLoaded = true;
@@ -343,7 +344,7 @@ public class MapCompiler extends Activity {
                         .show();
 
             } catch (IOException e) {
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
