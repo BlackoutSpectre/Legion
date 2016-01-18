@@ -38,13 +38,19 @@ public class ConfigurationOpener extends ListActivity {
         options.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
                 switch (position)
                 {
+
                     case 0:
                         Toast.makeText(getApplicationContext(),menuOptions[0],Toast.LENGTH_LONG).show();
                         break;
                     case 1:
-                        Intent intent = new Intent(getBaseContext(),MapCompiler.class);
+                        intent = new Intent(getBaseContext(),MapCompiler.class);
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getBaseContext(),VelocityConfig.class);
                         startActivity(intent);
                         break;
                     default:
