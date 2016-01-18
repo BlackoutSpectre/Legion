@@ -84,6 +84,29 @@ public class Helper
             }
             return number;
         }
+        public static double getDoubleFromString(String numberString, double defaultNumber)
+        {
+            double number;
+            if (numberString.length()>0)
+            {
+                try
+                {
+                    number = Double.parseDouble(numberString);
+                }
+                catch (Exception e)
+                {
+                    number = defaultNumber;
+                    //Toast.makeText(context.getApplicationContext(), "Bad number: \"" + numberString +
+                    //        "\". Defaulting to \"" + defaultNumber +"\"", Toast.LENGTH_LONG).show();
+                }
+            }
+            else {
+                number = defaultNumber;
+                //Toast.makeText(context.getApplicationContext(), "Bad number: \"" + numberString +
+                //        "\". Defaulting to \"" + defaultNumber +"\"", Toast.LENGTH_LONG).show();
+            }
+            return number;
+        }
     }
 
     /**
