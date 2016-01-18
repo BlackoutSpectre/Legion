@@ -148,12 +148,15 @@ public class VelocityConfig extends Activity {
 
     public void saveRadius(View view)
     {
-        if(!isAnyMeasurementUnset()&&leftRadiusBox.getText().length()!=0&&rightRadiusBox.getText().length()!=0)
+        if(!isAnyMeasurementUnset()&&leftRadiusBox.getText().toString().length()!=0&&rightRadiusBox.getText().toString().length()!=0)
         {
-
-            updateFromRadius();
-            displayMeasurements();
-            saveValues();
+            rightRadius=Helper.UI.getDoubleFromString(rightRadiusBox.getText().toString(),-1);
+            leftRadius=Helper.UI.getDoubleFromString(leftRadiusBox.getText().toString(),-1);
+            if(leftRadius>0&&rightRadius>0) {
+                updateFromRadius();
+                displayMeasurements();
+                saveValues();
+            }
         }
         else
         {
@@ -164,8 +167,10 @@ public class VelocityConfig extends Activity {
 
     public void saveCircum(View view)
     {
-        if(!isAnyMeasurementUnset()&&leftCircumBox.getText().length()!=0&&rightCircumBox.getText().length()!=0)
+        if(!isAnyMeasurementUnset()&&leftCircumBox.getText().toString().length()!=0&&rightCircumBox.getText().toString().length()!=0)
         {
+            rightCircum=Helper.UI.getDoubleFromString(rightCircumBox.getText().toString(),-1);
+            leftCircum=Helper.UI.getDoubleFromString(leftCircumBox.getText().toString(),-1);
             updateFromCircum();
             displayMeasurements();
             saveValues();
