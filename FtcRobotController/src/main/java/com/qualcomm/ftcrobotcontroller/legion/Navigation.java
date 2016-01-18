@@ -319,6 +319,16 @@ public class Navigation implements SensorEventListener
         return navigationAlright;
     }
 
+    //todo: finish reached waypoint method
+    /**
+     * procedures use this to see if the Legion has reached the waypoint
+     * @return true = reached, false = not yet reached
+     */
+    public boolean reachedCurrentWaypoint()
+    {
+        return true;
+    }
+
     /**
      * Called when sensor values have changed.
      * <p>See {@link SensorManager SensorManager}
