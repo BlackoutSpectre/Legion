@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.qualcomm.ftcrobotcontroller.R;
+import com.qualcomm.ftcrobotcontroller.legion.Helper;
 import com.qualcomm.ftcrobotcontroller.legion.Navigation;
 
 import java.io.File;
@@ -29,6 +30,11 @@ public class VelocityConfig extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_velocity_config);
+
+        leftRadiusBox = (EditText) findViewById(R.id.left_text_radius);
+        rightRadiusBox = (EditText) findViewById(R.id.right_text_radius);
+        leftCircumBox = (EditText) findViewById(R.id.left_text_circum);
+        rightCircumBox = (EditText) findViewById(R.id.right_text_circum);
 
         if (configExists())
         {
@@ -84,6 +90,43 @@ public class VelocityConfig extends Activity {
 
     private void updateFromRadius()
     {
+        leftCircum = Helper.findCircumference(leftRadius);
+        rightCircum = Helper.findCircumference(rightRadius);
+    }
+
+    private void updateFromCircum()
+    {
+        leftRadius=Helper.findRadius(leftCircum);
+        rightRadius=Helper.findRadius(rightCircum);
+    }
+
+    private boolean isAnyMeasurementUnset()
+    {
+        return leftRadius<=0||rightCircum<=0||leftCircum<=0||rightRadius<=0;
+    }
+
+    private void displayMeasurements()
+    {
+
+        if (leftRadius<=0)
+            leftRadiusBox.setText("");
+        else
+            leftRadiusBox.setText(""+leftRadius);
+
+        if(rightRadius<=0)
+            rightRadiusBox.setText("");
+        else
+            rightRadiusBox.setText(""+rightRadius);
+
+        if(leftCircum<=0)
+            leftCircumBox.setText("");
+        else
+            leftCircumBox.setText(""+leftCircum);
+
+        if(rightCircum<=0)
+            rightCircumBox.setText("");
+        else
+            rightCircumBox.setText(""+rightCircum);
 
     }
 }
