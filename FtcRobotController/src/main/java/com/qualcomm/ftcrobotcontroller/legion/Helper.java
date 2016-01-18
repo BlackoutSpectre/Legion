@@ -85,4 +85,27 @@ public class Helper
             return number;
         }
     }
+
+    /**
+     * Find the circumference of a circle from the radius. Inputting using one unit of measurement
+     * will return in the same unit of measurement.
+     * @param radius radius
+     * @return circumference
+     */
+    public static double findCircumference(double radius)
+    {
+        return 2*radius*Math.PI;
+
+    }
+
+    /**
+     * Inputting using one unit of measurement
+     * will return in the same unit of measurement.
+     * @param circumference circumference
+     * @return radius
+     */
+    public static double findRadius(double circumference)
+    {
+        return circumference/(2*Math.PI);
+    }
 }
