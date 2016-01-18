@@ -46,7 +46,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_here_string"
-            android:id="@+id/save_radius_button" />
+            android:id="@+id/save_radius_button"
+            android:onClick="saveRadius" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -85,7 +86,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_here_string"
-            android:id="@+id/save_circum_button" />
+            android:id="@+id/save_circum_button"
+            android:onClick="saveCircum" />
 
     </LinearLayout>
 
