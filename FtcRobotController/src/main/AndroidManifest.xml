@@ -29,9 +29,8 @@
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         android:required="true" />
-    <uses-permission android:name="android.permission.read_external_storage"
-        />
-    <uses-permission android:name="android.permission.write_external_storage"/>
+    <uses-permission android:name="android.permission.read_external_storage" />
+    <uses-permission android:name="android.permission.write_external_storage" />
 
     <uses-feature android:name="android.hardware.usb.accessory" />
 
@@ -93,14 +92,21 @@
         <activity
             android:name=".legion.Configuration.ConfigurationOpener"
             android:label="@string/title_activity_configuration_opener"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name=".legion.Configuration.MapCompiler"
             android:label="@string/title_activity_map_compiler"
             android:parentActivityName=".legion.Configuration.ConfigurationOpener"
-            android:theme="@android:style/Theme.Light"
-            >
+            android:theme="@android:style/Theme.Light" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
+        </activity>
+        <activity
+            android:name=".legion.Configuration.VelocityConfig"
+            android:label="@string/title_activity_velocity_config"
+            android:parentActivityName=".legion.Configuration.ConfigurationOpener" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />

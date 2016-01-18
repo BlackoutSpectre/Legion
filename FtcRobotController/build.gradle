@@ -46,4 +46,5 @@ dependencies {
     compile(name: 'WirelessP2p-release', ext: 'aar')
     compile(name: 'universal-image-loader-1.9.4', ext: 'jar')
     compile(name: 'yamlbeans-master', ext: 'zip')
+    compile 'com.android.support:support-v4:22.2.1'
 }
