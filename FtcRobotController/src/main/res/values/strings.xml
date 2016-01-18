@@ -73,6 +73,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Legion Main Menu -->
   <string name="legion_menu_introduction">Welcome to Legion! Select a menu below to get started setting up.</string>
   <string name="legion_map_compiler_opener">Field Map Compiler</string>
+  <string name="save_here_string">Save This</string>
     <!-- Field Map Compiler -->
     <string name="title_activity_map_compiler">Map Compiler</string>
     <string name="load_image">Load Map Image</string>
@@ -82,5 +83,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="map_scale_tip">It is a good idea to scale down the navigation map (like a lower resolution picture) to
 decrease the path finding time, however this does decrease the accuracy of Legion\'s navigation.</string>
     <string name="title_activity_velocity_config">Movement Detection Configuration</string>
+    <!-- Movement Detection Configuration Strings -->
+    <string name="wheel_radius_config_instruct">Enter the radius of the left and right wheels in centimeters.</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="cm">cm</string>
+    <string name="wheel_circum_config_instruct">Alternatively, you can enter the circumference of the wheels or measure how far the
+    robot has traveled after the motor of each wheel have completed rotating to the encoder value of 360. In centimeters of course.</string>
 
 </resources>
