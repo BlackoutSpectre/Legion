@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.qualcomm.ftcrobotcontroller.legion.Navigation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class VelocityConfig extends Activity {
@@ -78,6 +80,9 @@ public class VelocityConfig extends Activity {
                 leftRadius = scanner.nextDouble();
                 rightRadius = scanner.nextDouble();
                 updateFromRadius();
+                displayMeasurements();
+                Toast.makeText(getApplicationContext(),"Existing configuration loaded",Toast.LENGTH_LONG)
+                        .show();
             } catch (FileNotFoundException e) {
                 Toast.makeText(getApplicationContext(),"Error finding config file: "+configFileDir.getPath()
                 ,Toast.LENGTH_LONG).show();
@@ -127,6 +132,48 @@ public class VelocityConfig extends Activity {
             rightCircumBox.setText("");
         else
             rightCircumBox.setText(""+rightCircum);
+    }
 
+    private void saveValues()
+    {
+        try {
+            PrintWriter writer = new PrintWriter(configFileDir);
+            writer.write(""+leftRadius+" "+rightRadius);
+            writer.close();
+            Toast.makeText(getApplicationContext(),"Files saved.",Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveRadius(View view)
+    {
+        if(!isAnyMeasurementUnset()&&leftRadiusBox.getText().length()!=0&&rightRadiusBox.getText().length()!=0)
+        {
+
+            updateFromRadius();
+            displayMeasurements();
+            saveValues();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Error: please set both values.",Toast.LENGTH_LONG)
+            .show();
+        }
+    }
+
+    public void saveCircum(View view)
+    {
+        if(!isAnyMeasurementUnset()&&leftCircumBox.getText().length()!=0&&rightCircumBox.getText().length()!=0)
+        {
+            updateFromCircum();
+            displayMeasurements();
+            saveValues();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Error: please set both values.",Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 }
