@@ -82,7 +82,7 @@ public class Navigation implements SensorEventListener
     Timer navTimer;
     TimerTask timerRunner;
 
-    public static File wheelConfigFileDir = new File(Helper.getBaseFolder(),"/wheel radius.txt");
+    public static File WHEEL_CONFIG_FILE_DIR = new File(Helper.getBaseFolder(),"/wheel radius.txt");
 
     //public static final File COMPILED_MAP = new File(Helper.getBaseFolder(),"/compiledMap.map");
     //public static final File GRID_INFO = new File(Helper.getBaseFolder(),"/gridInfo.bin");
