@@ -88,7 +88,7 @@ public class VelocityConfig extends Activity {
                 ,Toast.LENGTH_LONG).show();
 
                 e.printStackTrace();
-                return;
+
             }
         }
     }
@@ -148,8 +148,11 @@ public class VelocityConfig extends Activity {
 
     public void saveRadius(View view)
     {
-        if(!isAnyMeasurementUnset()&&leftRadiusBox.getText().toString().length()!=0&&rightRadiusBox.getText().toString().length()!=0)
+        String right = rightRadiusBox.getText().toString();
+        String left = leftRadiusBox.getText().toString();
+        if(/*!isAnyMeasurementUnset()&&*/leftRadiusBox.getText().toString().length()!=0&&rightRadiusBox.getText().toString().length()!=0)
         {
+
             rightRadius=Helper.UI.getDoubleFromString(rightRadiusBox.getText().toString(),-1);
             leftRadius=Helper.UI.getDoubleFromString(leftRadiusBox.getText().toString(),-1);
             if(leftRadius>0&&rightRadius>0) {
@@ -157,6 +160,9 @@ public class VelocityConfig extends Activity {
                 displayMeasurements();
                 saveValues();
             }
+            else
+                Toast.makeText(getApplicationContext(),"Error: please set both values.",Toast.LENGTH_LONG)
+                        .show();
         }
         else
         {
@@ -167,13 +173,18 @@ public class VelocityConfig extends Activity {
 
     public void saveCircum(View view)
     {
-        if(!isAnyMeasurementUnset()&&leftCircumBox.getText().toString().length()!=0&&rightCircumBox.getText().toString().length()!=0)
+        if(/*!isAnyMeasurementUnset()&&*/leftCircumBox.getText().toString().length()!=0&&rightCircumBox.getText().toString().length()!=0)
         {
             rightCircum=Helper.UI.getDoubleFromString(rightCircumBox.getText().toString(),-1);
             leftCircum=Helper.UI.getDoubleFromString(leftCircumBox.getText().toString(),-1);
-            updateFromCircum();
-            displayMeasurements();
-            saveValues();
+            if (leftCircum>0&&rightCircum>0) {
+                updateFromCircum();
+                displayMeasurements();
+                saveValues();
+            }
+            else
+                Toast.makeText(getApplicationContext(),"Error: please set both values.",Toast.LENGTH_LONG)
+                        .show();
         }
         else
         {
