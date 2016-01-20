@@ -94,5 +94,7 @@ decrease the path finding time, however this does decrease the accuracy of Legio
     <string name="title_activity_waypoint_config">Waypoint Configuration</string>
     <string name="next">Next</string>
     <string name="previous">Back</string>
+    <string name="set_waypoint">Update Waypoint</string>
+    <string name="save_all">Save All</string>
 
 </resources>
