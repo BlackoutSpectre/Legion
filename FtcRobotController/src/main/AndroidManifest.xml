@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.qualcomm.ftcrobotcontroller"
     android:versionCode="5"
-    android:versionName="1.25" >
+    android:versionName="1.25">
 
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
@@ -38,12 +38,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".FtcRobotControllerActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +58,7 @@
         </activity>
         <activity
             android:name="com.qualcomm.ftccommon.FtcRobotControllerSettingsActivity"
-            android:label="@string/settings_activity" >
-        </activity>
+            android:label="@string/settings_activity"></activity>
 
         <service
             android:name="com.qualcomm.ftccommon.FtcRobotControllerService"
@@ -68,13 +67,11 @@
         <activity
             android:name="com.qualcomm.ftccommon.configuration.FtcLoadFileActivity"
             android:label="@string/configure_activity"
-            tools:replace="android:label" >
-        </activity>
+            tools:replace="android:label"></activity>
         <activity
             android:name="com.qualcomm.ftccommon.FtcWifiChannelSelectorActivity"
             android:label="@string/title_activity_wifi_channel_selector"
-            tools:replace="android:label" >
-        </activity>
+            tools:replace="android:label"></activity>
         <activity
             android:name="com.qualcomm.ftccommon.ConfigWifiDirectActivity"
             android:label="@string/title_activity_config_wifi_direct" />
@@ -82,7 +79,7 @@
             android:name="com.qualcomm.ftccommon.ViewLogsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_view_logs"
-            tools:replace="android:label" >
+            tools:replace="android:label">
             <intent-filter>
                 <action android:name="com.qualcomm.ftcrobotcontroller.VIEW_LOGS" />
 
@@ -92,13 +89,12 @@
         <activity
             android:name=".legion.Configuration.ConfigurationOpener"
             android:label="@string/title_activity_configuration_opener"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
         <activity
             android:name=".legion.Configuration.MapCompiler"
             android:label="@string/title_activity_map_compiler"
             android:parentActivityName=".legion.Configuration.ConfigurationOpener"
-            android:theme="@android:style/Theme.Light" >
+            android:theme="@android:style/Theme.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
@@ -110,8 +106,15 @@
             android:theme="@android:style/Theme.Black.NoTitleBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener"
-                />
+                android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
+        </activity>
+        <activity
+            android:name=".legion.Configuration.WaypointConfig"
+            android:label="@string/title_activity_waypoint_config"
+            android:parentActivityName=".legion.Configuration.ConfigurationOpener">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
         </activity>
     </application>
 
