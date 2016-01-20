@@ -52,6 +52,7 @@ public class ConfigurationOpener extends ListActivity {
                     case 2:
                         intent = new Intent(getBaseContext(),WaypointConfig.class);
                         startActivity(intent);
+                        break;
                     case 4:
                         intent = new Intent(getBaseContext(),VelocityConfig.class);
                         startActivity(intent);
