@@ -90,6 +90,9 @@ decrease the path finding time, however this does decrease the accuracy of Legio
     <string name="cm">cm</string>
     <string name="wheel_circum_config_instruct">Alternatively, you can enter the circumference of the wheels or measure how far the
     robot has traveled after the motor of each wheel have completed rotating to the encoder value of 360. In centimeters of course.</string>
+    <!-- Waypoint Config -->
     <string name="title_activity_waypoint_config">Waypoint Configuration</string>
+    <string name="next">Next</string>
+    <string name="previous">Back</string>
 
 </resources>
