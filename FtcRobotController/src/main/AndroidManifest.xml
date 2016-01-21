@@ -111,7 +111,8 @@
         <activity
             android:name=".legion.Configuration.WaypointConfig"
             android:label="@string/title_activity_waypoint_config"
-            android:parentActivityName=".legion.Configuration.ConfigurationOpener">
+            android:parentActivityName=".legion.Configuration.ConfigurationOpener"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.qualcomm.ftcrobotcontroller.legion.Configuration.ConfigurationOpener" />
