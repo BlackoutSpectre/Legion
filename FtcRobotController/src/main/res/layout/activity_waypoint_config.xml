@@ -23,7 +23,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/previous"
-                android:id="@+id/back_button" />
+                android:id="@+id/back_button"
+                android:onClick="goToPrevious"
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,7 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/next"
-                android:id="@+id/next_button" />
+                android:id="@+id/next_button"
+                android:onClick="goToNext" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,13 +50,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/set_waypoint"
-                android:id="@+id/update_button" />
+                android:id="@+id/update_button"
+                android:onClick="updateWaypoint" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/save_all"
-                android:id="@+id/save_button" />
+                android:id="@+id/save_button"
+                android:onClick="saveAll" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,6 +105,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_editText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/update_save_warning"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </LinearLayout>
