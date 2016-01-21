@@ -94,7 +94,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/waypoint_name"
-            android:id="@+id/textView3" />
+            android:id="@+id/waypoint_name_textView" />
 
         <EditText
             android:layout_width="match_parent"
