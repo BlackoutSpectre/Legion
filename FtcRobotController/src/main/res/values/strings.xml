@@ -100,5 +100,6 @@ decrease the path finding time, however this does decrease the accuracy of Legio
     <string name="waypoint_name">Waypoint Name</string>
     <string name="update_save_warning">Remember to update the waypoint before moving on and save the
         waypoints before exiting.</string>
+    <string name="add_waypoint">Add Waypoint</string>
 
 </resources>
