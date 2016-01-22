@@ -63,4 +63,9 @@ public class WaypointConfig extends Activity {
 
     }
 
+    public void addWaypoint(View view)
+    {
+
+    }
+
 }
