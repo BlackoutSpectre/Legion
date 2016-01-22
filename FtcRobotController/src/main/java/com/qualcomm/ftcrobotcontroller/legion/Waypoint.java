@@ -1,4 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.legion;
+
+import java.io.File;
+
 /**
  * Created by Seth Chick on 6/1/2015.
  */
@@ -10,11 +13,32 @@ package com.qualcomm.ftcrobotcontroller.legion;
  */
 public class Waypoint implements Comparable<String>
 {
-    private String name; //identifer for waypoint, cannot be changed, named by config waypoint file
+    /**
+     * identifer for waypoint, cannot be changed, named by config waypoint file
+     */
+    private String name; //
+    /**
+     * cannot be set more than once, initialized by waypoint config file
+     */
     private int xPos; //cannot be set more than once, initialized by waypoint config file
+    /**
+     * cannot be set more than once, initialized by waypoint config file
+     */
     private int yPos; //cannot be set more than once, initialized by waypoint config file
+    /**
+     * Move directly to this point, not considering collisions.
+     * @deprecated this will be handled by procedures instead
+     */
     private boolean directNavigate; //Move directly to this point, not considering collisions.
+    /**
+     * The area in which the robot to consider that it reach its destination.
+     */
     private int stoppingRadius; //The area in which the robot to consider that it reach its destination.
+
+    /**
+     * default directory of the waypoints file
+     */
+    public final static File WAYPOINT_LIST_FILE = new File(Helper.getBaseFolder(),"/waypoints.cfg");
 
 
     public Waypoint(String name, int xPos, int yPos, boolean direct, int radius)
@@ -39,6 +63,11 @@ public class Waypoint implements Comparable<String>
     {
         yPos=pos;
     }
+
+    /**
+     * @deprecated
+     * @param direct
+     */
     public void setDirectNavigate(boolean direct)
     {
         directNavigate=direct;
@@ -60,6 +89,11 @@ public class Waypoint implements Comparable<String>
     {
         return name;
     }
+
+    /**
+     * @deprecated
+     * @return
+     */
     public boolean getDirect()
     {
         return directNavigate;
