@@ -14,6 +14,7 @@ public class AR2TeleOp extends OpMode {
 
     //DriveTrain
     DcMotor motorLeft;
+    DcMotor motorRight;
 
     public AR2TeleOp() {
 
@@ -36,12 +37,14 @@ public class AR2TeleOp extends OpMode {
 		 */
         //DriveTrain
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
+        motorRight = hardwareMap.dcMotor.get("motorRight");
 
         /*This was included in case the motor needed to be reversed
          *FORWARD is to make the motor run forward
          *REVERSE is to run the motor in the opposite direction i.e. reverse
          */
         motorLeft.setDirection(DcMotor.Direction.FORWARD);
+        motorRight.setDirection(DcMotor.Direction.REVERSE);
     }
     //Programs looped
     @Override
@@ -58,14 +61,21 @@ public class AR2TeleOp extends OpMode {
         // 1 is full down
         // driverRightStick: right_stick_y ranges from -1 to 1, where -1 is full up
         // and 1 is full down
-        float driverLeftStick = -gamepad1.left_stick_y;
+        float driverLeftStick = gamepad1.left_stick_y;
+        float driverRightStick = gamepad1.left_stick_y;
 
         // scale the joystick value to make it easier to control
         // the robot more precisely at slower speeds.
         driverLeftStick = (float)scaleInput(driverLeftStick);
+        driverRightStick = (float)scaleInput(driverRightStick);
 
         // clip the right/left values so that the values never exceed +/- 1
         driverLeftStick = Range.clip(driverLeftStick, -1, 1);
+        driverRightStick = Range.clip(driverRightStick,-1,1);
+
+        //sets the power of the motor
+        motorRight.setPower(driverRightStick);
+        motorLeft.setPower(driverLeftStick);
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
@@ -75,6 +85,7 @@ public class AR2TeleOp extends OpMode {
 		 */
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", driverLeftStick));
+        telemetry.addData("right tgt pwr",  "right  pwr: " + String.format("%.2f", driverRightStick));
 
     }
     @Override
