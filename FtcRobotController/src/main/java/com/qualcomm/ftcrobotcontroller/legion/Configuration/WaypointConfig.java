@@ -26,11 +26,26 @@ public class WaypointConfig extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waypoint_config);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (waypointExists())
+        {
+            loadWaypoints();
+        }
+        else
+        {
+            addWaypoint(null);
+        }
+    }
+
+    public boolean waypointExists()
+    {
+        return Waypoint.WAYPOINT_LIST_FILE.exists();
     }
 
     public void loadWaypoints()
     {
-
+        //todo: make load config code
+        currentPos=0;
     }
 
     public void saveWaypoints()
@@ -40,6 +55,8 @@ public class WaypointConfig extends Activity {
 
     private void displaySettings()
     {
+        current = waypoints.get(currentPos);
+        //todo: complete display settings, if values (null and -1), leave text blank
 
     }
 
@@ -65,7 +82,9 @@ public class WaypointConfig extends Activity {
 
     public void addWaypoint(View view)
     {
-
+        waypoints.add(new Waypoint(null,-1,-1,false,-1));
+        currentPos=waypoints.size()-1;
+        displaySettings();
     }
 
 }
