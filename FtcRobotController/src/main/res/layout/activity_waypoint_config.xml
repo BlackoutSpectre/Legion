@@ -24,8 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/previous"
                 android:id="@+id/back_button"
-                android:onClick="goToPrevious"
-                android:nestedScrollingEnabled="false" />
+                android:onClick="goToPrevious" />
 
             <TextView
                 android:layout_width="wrap_content"
