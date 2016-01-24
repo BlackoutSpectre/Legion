@@ -112,6 +112,7 @@ public class Navigation implements SensorEventListener
     //public static final File COMPILED_MAP = new File(Helper.getBaseFolder(),"/compiledMap.map");
     //public static final File GRID_INFO = new File(Helper.getBaseFolder(),"/gridInfo.bin");
 
+    private SpawnPoint spawnPoint;
     /**
      * this is so the Navigation class can callback to the AICore class
      * @see AICore
@@ -173,6 +174,7 @@ public class Navigation implements SensorEventListener
         }
         loadCompiledMap();
         loadWaypoints();
+        loadSpawnpoint();
 
         //makes the relative to the tile map
         int[] spacing = gridInfo.getMapCoordinateFromGrid(robotDimensions,robotDimensions);
@@ -181,6 +183,13 @@ public class Navigation implements SensorEventListener
 
     }
 
+    private void loadSpawnpoint() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(SpawnPoint.STARTING_SPAWNPOINT_FILE);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        spawnPoint = (SpawnPoint) objectInputStream.readObject();
+        objectInputStream.close();
+
+    }
     private void loadWheelRadius() throws FileNotFoundException {
         Scanner scanner = new Scanner(Navigation.WHEEL_CONFIG_FILE_DIR);
         leftWheelRadius=scanner.nextDouble();
@@ -588,6 +597,7 @@ public class Navigation implements SensorEventListener
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 
     /**
      * All of the extra, non-core, methods are entered here
