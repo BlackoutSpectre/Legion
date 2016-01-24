@@ -6,13 +6,19 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Grid;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.Map;
 import com.qualcomm.ftcrobotcontroller.legion.pathfinding.PathingNode;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,8 +85,13 @@ public class Navigation implements SensorEventListener
     Context context;
     boolean started;
 
+    private Grid gridInfo;
+
     Timer navTimer;
     TimerTask timerRunner;
+
+    double leftWheelRadius;
+    double rightWheelRadius;
 
     public static File WHEEL_CONFIG_FILE_DIR = new File(Helper.getBaseFolder(),"/wheel radius.txt");
 
@@ -121,8 +132,7 @@ public class Navigation implements SensorEventListener
      * Use this method to initialize and load all files and configs into memory
      * and readies the program for start.
      */
-    public Navigation()
-    {
+    public Navigation(int robotDeminsions, Ultrasonic[] distanceSensors) throws IOException, ClassNotFoundException {
         navTimer = new Timer();
         timerRunner = new TimerTask() {
             @Override
@@ -135,6 +145,44 @@ public class Navigation implements SensorEventListener
         gyro = gyroSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         gyroSensorManager.registerListener(this, gyro,interval);
         started=false;
+        try {
+            loadWheelRadius();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Wheel Config Not Found");
+
+        }
+        loadCompiledMap();
+        loadWaypoints();
+
+
+    }
+
+    private void loadWheelRadius() throws FileNotFoundException {
+        Scanner scanner = new Scanner(Navigation.WHEEL_CONFIG_FILE_DIR);
+        leftWheelRadius=scanner.nextDouble();
+        rightWheelRadius = scanner.nextDouble();
+    }
+
+    private void loadCompiledMap() throws IOException, ClassNotFoundException {
+        //loads compiled map
+        FileInputStream fileInputStream = new FileInputStream(Navigation.getCompiledMap());
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        actualField = (Map<PathingNode>) objectInputStream.readObject();
+        objectInputStream.close();
+
+        //loads grid info
+        fileInputStream = new FileInputStream(getGridInfo());
+        objectInputStream = new ObjectInputStream(fileInputStream);
+        gridInfo = (Grid)objectInputStream.readObject();
+        objectInputStream.close();
+    }
+
+    private void loadWaypoints() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(Waypoint.WAYPOINT_LIST_FILE);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        listOfWaypoints = (ArrayList<Waypoint>) objectInputStream.readObject();
+        objectInputStream.close();
     }
 
     /**
@@ -221,10 +269,18 @@ public class Navigation implements SensorEventListener
      * @param rightWheelDifference the degree difference of the right wheel
      * @param timeInterval the time in milliseconds between samples
      */
-    public void updateVelocityByEncoders(int leftWheelDifference, int rightWheelDifference,
-                long timeInterval)
+    public void updateLocationByEncoders(int leftWheelDifference, int rightWheelDifference,
+                                         long timeInterval)
     {
+        double arcLeft = ((double) leftWheelDifference/360)*(2*Math.PI*leftWheelRadius);
+        double arcRight = ((double) rightWheelDifference/360)*(2*Math.PI*rightWheelRadius);
 
+        //gets actual distance from the mean of the two wheels
+        double distance = arcLeft+arcRight/2;
+
+        //updates the position based on the distance traveled
+        XPos = getActualXPos()+distance*Math.sin(heading);
+        YPos = getActualYPos()+distance*Math.cos(heading);
     }
     /**
      * uses accelerometer to determine robot's speed.
@@ -259,7 +315,7 @@ public class Navigation implements SensorEventListener
      * assumes the Waypoint list is sorted
      * @param id the waypoint name to be searched for.
      * @see Waypoint
-     * @throws RuntimePermission waypoint not found
+     * @throws RuntimeException waypoint not found
      */
     private List<PathingNode> pathToWaypoint(String id)
     {
