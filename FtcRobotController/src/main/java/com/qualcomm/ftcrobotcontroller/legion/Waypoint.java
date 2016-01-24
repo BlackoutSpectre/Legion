@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.legion;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * Created by Seth Chick on 6/1/2015.
@@ -11,7 +12,7 @@ import java.io.File;
   configuration text files created externally in a certain directory in the Android's
   memory.
  */
-public class Waypoint implements Comparable<String>
+public class Waypoint implements Comparable<String>, Serializable
 {
     /**
      * identifer for waypoint, cannot be changed, named by config waypoint file
