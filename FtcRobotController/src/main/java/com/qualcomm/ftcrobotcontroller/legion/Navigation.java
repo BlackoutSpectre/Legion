@@ -75,7 +75,16 @@ public class Navigation implements SensorEventListener
     tilt*/
     //protected static double[] fieldRelativeRobotVelocity = new double[2];
     private SensorCalc acceleration = new LinearAccel(); //use to get accel to calc speed
+    /**
+     * current heading of robot in radians
+     */
     private double heading; //in radians
+    /**
+     * the target heading of the robot towards it's current path or waypoint in radians.
+     * @see Waypoint
+     */
+    private double targetHeading;
+
     private Sensor gyro;
     private SensorManager gyroSensorManager;
 
@@ -113,6 +122,8 @@ public class Navigation implements SensorEventListener
      */
     private ArrayList<Waypoint> listOfWaypoints;
 
+    private Ultrasonic[] distanceSensors;
+
 
     /**
      * current waypoint in use
@@ -131,8 +142,10 @@ public class Navigation implements SensorEventListener
     /**
      * Use this method to initialize and load all files and configs into memory
      * and readies the program for start.
+     * @param distanceSensors sensors used to detect obstructions
+     * @param robotDimensions longest distance from the edge of the robot to the center of rotation.
      */
-    public Navigation(int robotDeminsions, Ultrasonic[] distanceSensors) throws IOException, ClassNotFoundException {
+    public Navigation(int robotDimensions, Ultrasonic[] distanceSensors) throws IOException, ClassNotFoundException {
         navTimer = new Timer();
         timerRunner = new TimerTask() {
             @Override
@@ -144,6 +157,7 @@ public class Navigation implements SensorEventListener
         gyroSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         gyro = gyroSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         gyroSensorManager.registerListener(this, gyro,interval);
+        this.distanceSensors=distanceSensors;
         started=false;
         try {
             loadWheelRadius();
@@ -154,6 +168,10 @@ public class Navigation implements SensorEventListener
         }
         loadCompiledMap();
         loadWaypoints();
+
+        //makes the relative to the tile map
+        int[] spacing = gridInfo.getMapCoordinateFromGrid(robotDimensions,robotDimensions);
+        actualField.setSpacing(spacing[0]*2);
 
 
     }
@@ -375,14 +393,18 @@ public class Navigation implements SensorEventListener
         return navigationAlright;
     }
 
-    //todo: finish reached waypoint method
+
     /**
      * procedures use this to see if the Legion has reached the waypoint
      * @return true = reached, false = not yet reached
      */
     public boolean reachedCurrentWaypoint()
     {
-        return true;
+        int goalX = currentWayPoint.getXPos();
+        int goalY = currentWayPoint.getYPos();
+        int spacing = currentWayPoint.getStoppingRadius();
+        return (goalX-spacing>getXPos()&&goalX+spacing<getXPos())&&
+                (goalY-spacing>getYPos()&&goalY+spacing<getYPos());
     }
 
     /**
@@ -421,6 +443,18 @@ public class Navigation implements SensorEventListener
     private void updateHeading(float turnRate, int timeInterval)
     {
         heading += turnRate * (float) timeInterval/1000;
+        heading = correctHeading(heading);
+    }
+
+    private double correctHeading(double heading)
+    {
+        if (heading<0)
+        {
+            heading+=2*Math.PI;
+        }
+        else if (heading>=2*Math.PI)
+            heading-=2*Math.PI;
+        return heading;
     }
 
     /**
