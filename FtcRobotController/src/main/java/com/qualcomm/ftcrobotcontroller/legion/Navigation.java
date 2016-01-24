@@ -217,12 +217,20 @@ public class Navigation implements SensorEventListener
         objectInputStream.close();
     }
 
+    //todo: make AICore wait for the waypoint to be reached.
     /**
      * when the match starts, activate this method to begin all tracking
      */
     public void start()
     {
         navTimer.schedule(timerRunner, SPEED_INTERVAL);
+        String waypoint = spawnPoint.getStartingWaypoint();
+        if (waypoint!=null)
+            navigateTo(waypoint,false,false);
+        else
+        {
+            //todo: have AICore start immediately
+        }
         started=true;
     }
 
