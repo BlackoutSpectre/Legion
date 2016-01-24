@@ -1,11 +1,11 @@
 package com.qualcomm.ftcrobotcontroller.legion;
 
-import com.qualcomm.ftcrobotcontroller.legion.Waypoint;
+import java.io.Serializable;
 
 /**
  * Created by Blackout Spectre on 12/18/2015.
  */
-public class SpawnPoint extends Waypoint{
+public class SpawnPoint extends Waypoint implements Serializable{
 
     /**
      * Heading in degrees, not changed to radians yet
@@ -16,13 +16,13 @@ public class SpawnPoint extends Waypoint{
      * Use this to tell the robot to move to an open space
      * after the match starts
      */
-    private CoreProcedure startingAction;
+    private String startingWaypoint;
 
 
-    public SpawnPoint(String name, CoreProcedure startingAction, int x, int y, int headingInDegrees)
+    public SpawnPoint(String name, String startingWaypoint, int x, int y, int headingInDegrees)
     {
         super(name, x, y, true, 0);
-        this.startingAction=startingAction;
+        this.startingWaypoint =startingWaypoint;
         this.headingInDegrees=headingInDegrees;
     }
 
@@ -33,10 +33,11 @@ public class SpawnPoint extends Waypoint{
      * @see AICore
      * @see Navigation
      * @see CoreProcedure
+     * @deprecated
      */
     public void setAICore(AICore parent)
     {
-        startingAction.parent=parent;
+        //startingWaypoint.parent=parent;
     }
 
     public void setHeadingInDegrees(int degrees)
