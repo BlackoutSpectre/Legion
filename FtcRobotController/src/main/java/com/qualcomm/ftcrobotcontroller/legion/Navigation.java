@@ -503,6 +503,45 @@ public class Navigation implements SensorEventListener
     }
 //todo: implement a set target heading method
 
+    public void updateTargetHeading()
+    {
+        double xDiff;
+        double yDiff;
+        if (usePathing&&path!=null&&path.size()>0)
+        {
+            int pathX = path.get(0).getxPos(); //inverted
+            int pathY = path.get(0).getyPos();
+
+            pathY = convertYMapToInverse(pathX,true);//restores
+
+            int[] pathLoc = gridInfo.getGridCoordinateFromMap(pathX,pathY);
+            pathX = pathLoc[0];
+            pathY = pathLoc[1];
+
+            xDiff = pathX - getXPos();
+            yDiff = pathY - getYPos();
+
+
+            targetHeading = Math.atan(xDiff/yDiff);
+        }
+        else
+        {
+            int waypointX = currentWayPoint.getXPos();
+            int waypointY = currentWayPoint.getYPos();
+
+
+
+            int[] pathLoc = gridInfo.getGridCoordinateFromMap(waypointX,waypointY);
+            waypointX = pathLoc[0];
+            waypointY = pathLoc[1];
+
+            xDiff = waypointX - getXPos();
+            yDiff = waypointY - getYPos();
+
+
+            targetHeading = Math.atan(xDiff/yDiff);
+        }
+    }
 
     /**
      * Called when the accuracy of a sensor has changed.
