@@ -28,10 +28,11 @@ import java.util.TimerTask;
 
 
 
-
+//todo: add obstruction detector
+//todo: add pathing handler
+//todo: add movement output
 //todo: implement spawn point config file
-//todo: implement waypoint files, implement picture maps,
-//todo: change FileNotFoundException to RuntimeException with details of what is wrong
+//todo: implement picture maps,
 //todo: emprovise collision detection from tile scaling
 
 /**
@@ -448,7 +449,7 @@ public class Navigation implements SensorEventListener
         int pathY = path.get(0).getyPos();
 
         pathY = convertYMapToInverse(pathY,true);
-        int[] actualNode = gridInfo.getGridCoordinateFromMap(pathX,pathY);
+        int[] actualNode = gridInfo.getGridCoordinateFromMap(pathX, pathY);
 
         return (actualNode[0]-PATH_NODE_RADIUS<=getXPos()&&actualNode[0]+PATH_NODE_RADIUS>=getXPos())
                 &&(actualNode[1]-PATH_NODE_RADIUS<=getYPos()&&actualNode[1]+PATH_NODE_RADIUS>=getYPos());
@@ -503,7 +504,6 @@ public class Navigation implements SensorEventListener
             heading-=2*Math.PI;
         return heading;
     }
-//todo: implement a set target heading method
 
     public void updateTargetHeading()
     {
@@ -544,6 +544,37 @@ public class Navigation implements SensorEventListener
             targetHeading = Math.atan(xDiff/yDiff);
         }
     }
+
+    /**
+     *
+     * @return <0 = left, 0 = none, >0 = right
+     */
+    public double getRotationDirection(double heading, double targetHeading)
+    {
+        /*double leftDistance;
+        double rightDistance;
+
+        leftDistance = (targetHeading-heading);
+        rightDistance = (heading-targetHeading);
+
+        if (leftDistance<rightDistance)
+        {
+            return -1;
+        }
+        else if (rightDistance<leftDistance)
+            return 1;
+        return 0;
+        */
+        double a1 = targetHeading-heading;
+        double a2 = targetHeading-2*Math.PI+0-heading;
+
+        if (Math.abs(a1)<Math.abs(a2))
+            return a1;
+        else
+            return a2;
+    }
+
+
 
     /**
      * Called when the accuracy of a sensor has changed.
