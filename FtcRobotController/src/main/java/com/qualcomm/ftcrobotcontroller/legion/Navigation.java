@@ -29,14 +29,17 @@ import java.util.TimerTask;
 
 
 
-//todo: implement sensor functions, implement spawn point config file
-//todo: implement waypoint files, implement picture maps, implement robot properties file
+//todo: implement spawn point config file
+//todo: implement waypoint files, implement picture maps,
 //todo: change FileNotFoundException to RuntimeException with details of what is wrong
 //todo: emprovise collision detection from tile scaling
 
 /**
  * This handles all movement and navigation of the robot, will throw fatal exceptions during
  * autonomous if something goes wrong.
+ *
+ * Psuodocode (converting from matrix to position and back: When setting path, convert to matrix.
+ * Accessing path position for movement, convert to actual.
  * @version 0.00.00.03 dev
  * @author Blackout Spectre
  */
@@ -54,6 +57,7 @@ public class Navigation implements SensorEventListener
 
     public Map<PathingNode> actualField;
     private List<PathingNode> path;
+    protected static final int PATH_NODE_RADIUS = 15;
     /**
      * Used to store temporary data to compare actual possible fields to the what the robot sees
      * to determine the field configuration the robot is on. Will be deleted when determined.
@@ -171,7 +175,7 @@ public class Navigation implements SensorEventListener
 
         //makes the relative to the tile map
         int[] spacing = gridInfo.getMapCoordinateFromGrid(robotDimensions,robotDimensions);
-        actualField.setSpacing(spacing[0]*2);
+        actualField.setSpacing(spacing[0]);
 
 
     }
@@ -262,18 +266,42 @@ public class Navigation implements SensorEventListener
     /**
      *
      * @return the electronic X position of Legion on the map
+     * @deprecated is redundant, do not flip over y axis
      */
     public int getMatrixXPos()
     {
-        return actualField.getMapSize()[0]-1-getXPos();
+        return actualField.getMapSize()[0]-1-gridInfo.getMapCoordinateFromGrid(getXPos(),0)[0];
     }
 
     /**
+     * converts from actual (grid) to scaled (map)
      * @return the electronic Y position of Legion on the map
      */
     public int getMatrixYPos()
     {
-        return actualField.getMapSize()[1]-1-getYPos();
+        return actualField.getMapSize()[1]- 1 -gridInfo.getMapCoordinateFromGrid(0,getYPos())[1];
+    }
+
+    /**
+     * get the inverse of the coordinate
+     * @param pos position (not scaled) (grid)
+     * @param isMirrored is it already inverted?
+     * @return the inverted Y Position
+     */
+    public int convertYtoInverse(int pos,boolean isMirrored)
+    {
+        return gridInfo.getGridSizeY()-1-pos;
+    }
+
+    /**
+     * is already scaled down
+     * @param pos scaled down position (map)
+     * @param isMirrored is it already inverted
+     * @return the scaled (map) Y position
+     */
+    public int convertYMapToInverse(int pos, boolean isMirrored)
+    {
+        return gridInfo.getMapSizeY()-1-pos;
     }
 
 
@@ -343,10 +371,12 @@ public class Navigation implements SensorEventListener
             throw new RuntimeException("Specified Waypoint was not found in list");
         else {
             currentWayPoint = listOfWaypoints.get(pos);
-            int currentXPos = size[0]-1-getXPos();//get the x pos of the matrix
-            int currentYPos = size[1]-1-getYPos();//get the y pos of the matrix
-            int waypointX = size[0]-1-currentWayPoint.getXPos();
-            int waypointY = size[1]-1-currentWayPoint.getYPos();
+            //int currentXPos = size[0]-1-getXPos();
+            int currentXPos = gridInfo.getMapCoordinateFromGrid(getXPos(),getYPos())[0];//get the x pos of the matrix
+            //int currentYPos = size[1]-1-getYPos();
+            int currentYPos = getMatrixYPos();//get the y pos of the matrix
+            int waypointX = gridInfo.getMapCoordinateFromGrid(currentWayPoint.getXPos(),0)[0];
+            int waypointY = size[1]-1-gridInfo.getMapCoordinateFromGrid(0, currentWayPoint.getYPos())[1];
             return actualField.findPath(currentXPos, currentYPos, waypointX, waypointY);
         }
 
@@ -408,6 +438,21 @@ public class Navigation implements SensorEventListener
     }
 
     /**
+     *
+     * @return true = reached path node, false = hasn't
+     */
+    public boolean reachedPathNode()
+    {
+
+        int pathX = path.get(0).getxPos();
+        int pathY = path.get(0).getyPos();
+        int[] actualNode = gridInfo.getGridCoordinateFromMap(pathX,pathY);
+
+        return (actualNode[0]-PATH_NODE_RADIUS<=getXPos()&&actualNode[0]+PATH_NODE_RADIUS>=getXPos())
+                &&(actualNode[1]-PATH_NODE_RADIUS<=getYPos()&&actualNode[1]+PATH_NODE_RADIUS>=getYPos());
+    }
+
+    /**
      * Called when sensor values have changed.
      * <p>See {@link SensorManager SensorManager}
      * for details on possible sensor types.
@@ -456,6 +501,8 @@ public class Navigation implements SensorEventListener
             heading-=2*Math.PI;
         return heading;
     }
+//todo: implement a set target heading method
+
 
     /**
      * Called when the accuracy of a sensor has changed.
