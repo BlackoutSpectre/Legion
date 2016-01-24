@@ -29,8 +29,6 @@ import java.util.TimerTask;
 
 
 //todo: add obstruction detector
-//todo: add pathing handler
-//todo: add movement output
 //todo: implement spawn point config file
 //todo: implement picture maps,
 //todo: emprovise collision detection from tile scaling
