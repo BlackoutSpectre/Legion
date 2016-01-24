@@ -1,5 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.legion;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -7,6 +8,8 @@ import java.io.Serializable;
  */
 public class SpawnPoint extends Waypoint implements Serializable{
 
+    public static final File STARTING_WAYPOINT_FILE = new File(Helper.getBaseFolder(),"/spawnpoint.bin");
+    public static final File WAYPOINT_LIST_FILE = new File(Helper.getBaseFolder(),"/spawnpoint settings.bin");
     /**
      * Heading in degrees, not changed to radians yet
      */
