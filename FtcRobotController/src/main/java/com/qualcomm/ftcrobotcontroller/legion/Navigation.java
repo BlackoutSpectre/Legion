@@ -446,6 +446,8 @@ public class Navigation implements SensorEventListener
 
         int pathX = path.get(0).getxPos();
         int pathY = path.get(0).getyPos();
+
+        pathY = convertYMapToInverse(pathY,true);
         int[] actualNode = gridInfo.getGridCoordinateFromMap(pathX,pathY);
 
         return (actualNode[0]-PATH_NODE_RADIUS<=getXPos()&&actualNode[0]+PATH_NODE_RADIUS>=getXPos())
