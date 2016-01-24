@@ -17,7 +17,7 @@ public class Ultrasonic
     private int degreeOffset;
     private int distanceFromCenter;
     private int maxRange;
-    private int inputUnits;
+
     /**
      * 0=inches, 1=centimeters
      */
@@ -39,7 +39,10 @@ public class Ultrasonic
      */
     public Ultrasonic(int degreeOffset, int distanceFromCenter, int maxRange, int units)
     {
-
+        this.degreeOffset=degreeOffset;
+        this.distanceFromCenter=distanceFromCenter;
+        this.maxRange=maxRange;
+        unitsUsed=units;
     }
 
     /**
