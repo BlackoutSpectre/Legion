@@ -56,5 +56,9 @@ public class SpawnPoint extends Waypoint implements Serializable{
     {
         return headingInDegrees;
     }
+    public String getStartingWaypoint()
+    {
+        return startingWaypoint;
+    }
 
 }
