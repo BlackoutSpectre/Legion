@@ -491,7 +491,7 @@ public class Navigation implements SensorEventListener
         if (started) {
             switch (event.sensor.getType()) {
                 case Sensor.TYPE_GYROSCOPE:
-                    updateHeading(event.values[0],(int)SPEED_INTERVAL);
+                    updateHeading(event.values[2],(int)SPEED_INTERVAL);
                     break;
                 default:
                     break;
@@ -592,7 +592,32 @@ public class Navigation implements SensorEventListener
     }
 
 
+    /**
+     * call this within the robot program to get the movement directions. You must use this method
+     * in the root program that activates Legion so that Legion can tell the robot where to go.
+     * Also, you'll need to make an algerythm to convert this into motor values for the left and
+     * right motors. The return values will not stay within -1 and 1.
+     * @return [0] = forward movement, [1] is rotational movement (>0 = right, <0 = left)
+     */
+    public double[] getMovementOutput()
+    {
+        double[] output = new double[2];
 
+        if (started)
+        {
+            if (!reachedCurrentWaypoint())
+            {
+                output[0]=1;
+            }
+            if (usePathing)
+                if (reachedPathNode()&&path.size()>0) //handles path following with update
+                    path.remove(0);
+            updateTargetHeading();
+            output[1] = getRotationDirection(heading,targetHeading);
+
+        }
+        return output;
+    }
     /**
      * Called when the accuracy of a sensor has changed.
      * <p>See {@link SensorManager SensorManager}
