@@ -338,7 +338,7 @@ public class Navigation implements SensorEventListener
         double arcRight = ((double) rightWheelDifference/360)*(2*Math.PI*rightWheelRadius);
 
         //gets actual distance from the mean of the two wheels
-        double distance = arcLeft+arcRight/2;
+        double distance = (arcLeft+arcRight)/2;
 
         //updates the position based on the distance traveled
         XPos = getActualXPos()+distance*Math.sin(heading);
